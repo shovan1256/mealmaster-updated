@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Users Collection (Profiles, Roles: it_admin, manager, user, Approval status)
+    match /Users/{userId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // DayMealEntries Collection (Daily meals, 4-digit token codes, preferences, served status)
+    match /DayMealEntries/{mealId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // BazarExpenses Collection (Bazar grocery expenses logged by manager)
+    match /BazarExpenses/{bazarId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Deposits Collection (Boarder deposits logged by manager)
+    match /Deposits/{depositId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // FixedCosts Collection (Mess fixed costs)
+    match /FixedCosts/{costId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // MessNotices Collection (Notices, Serving schedules)
+    match /MessNotices/{noticeId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Test connection doc
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+  }
+}

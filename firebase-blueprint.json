@@ -1,0 +1,143 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Boarder, Manager or IT Admin User Profile for MealMaster dining management",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "phone": { "type": "string", "description": "Phone number or identifier" },
+        "name": { "type": "string", "maxLength": 100, "description": "Full name of the boarder" },
+        "username": { "type": "string", "maxLength": 50, "description": "Login username" },
+        "password": { "type": "string", "maxLength": 100, "description": "Account password" },
+        "role": { "type": "string", "enum": ["it_admin", "manager", "user"], "description": "Access role" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"], "description": "Approval status" },
+        "approved": { "type": "boolean", "description": "Whether approved by manager/it_admin" },
+        "room": { "type": "string", "maxLength": 20, "description": "Room or seat number" },
+        "department": { "type": "string", "maxLength": 80, "description": "Academic department" },
+        "batch": { "type": "string", "maxLength": 30, "description": "Batch or session number" },
+        "photoUrl": { "type": "string", "description": "Profile picture URL or avatar" },
+        "active": { "type": "boolean", "description": "Whether active in the mess" },
+        "mealActive": { "type": "boolean", "description": "Whether daily dining meal is currently turned on" },
+        "stoppedSinceDate": { "type": "string", "description": "Date when meal was turned off" },
+        "carryOverDue": { "type": "number", "description": "Carry-over unpaid dues from previous months" },
+        "avatarColor": { "type": "string", "description": "Avatar Tailwind background color class" },
+        "createdAt": { "type": "string", "description": "Account creation timestamp" },
+        "updatedAt": { "type": "string", "description": "Account last update timestamp" }
+      },
+      "required": ["uid", "phone", "name", "role", "approved", "status", "active", "mealActive"]
+    },
+    "DayMealEntry": {
+      "title": "DayMealEntry",
+      "description": "Daily meal record for a member with anti-theft token and menu preferences",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique entry identifier" },
+        "date": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "description": "Date in YYYY-MM-DD" },
+        "memberId": { "type": "string", "description": "Member UID or ID" },
+        "mealOn": { "type": "boolean", "description": "Whether the meal is on for this day" },
+        "mealsCount": { "type": "number", "description": "Total regular meals for this day" },
+        "guestMeals": { "type": "number", "description": "Number of extra guest meals" },
+        "lunchPreference": { "type": "string", "enum": ["beef", "mutton", "fish", "egg", "vegetarian"], "description": "Lunch menu choice" },
+        "dinnerPreference": { "type": "string", "enum": ["chicken", "fish", "egg", "vegetarian"], "description": "Dinner menu choice" },
+        "breakfastServed": { "type": "boolean", "description": "Whether breakfast token was marked as eaten" },
+        "lunchServed": { "type": "boolean", "description": "Whether lunch token was marked as eaten" },
+        "dinnerServed": { "type": "boolean", "description": "Whether dinner token was marked as eaten" },
+        "breakfastTokenCode": { "type": "string", "description": "4-digit breakfast anti-theft token code" },
+        "lunchTokenCode": { "type": "string", "description": "4-digit lunch anti-theft token code" },
+        "dinnerTokenCode": { "type": "string", "description": "4-digit dinner anti-theft token code" },
+        "breakfastServedAt": { "type": "string", "description": "Timestamp when breakfast was served" },
+        "lunchServedAt": { "type": "string", "description": "Timestamp when lunch was served" },
+        "dinnerServedAt": { "type": "string", "description": "Timestamp when dinner was served" },
+        "updatedAt": { "type": "string", "description": "Last updated date string" }
+      },
+      "required": ["id", "date", "memberId", "mealOn", "mealsCount", "guestMeals"]
+    },
+    "BazarExpense": {
+      "title": "BazarExpense",
+      "description": "Mess bazar grocery and food expense record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Expense ID" },
+        "date": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "description": "Date of bazar in YYYY-MM-DD" },
+        "memberId": { "type": "string", "description": "Who bought the bazar" },
+        "memberName": { "type": "string", "description": "Name of the shopper" },
+        "title": { "type": "string", "maxLength": 100, "description": "Short title of expense" },
+        "items": { "type": "string", "maxLength": 500, "description": "Item details and weights" },
+        "category": { "type": "string", "enum": ["fish_meat", "vegetables", "grocery_spices", "oil_rice", "gas_fuel", "others"], "description": "Expense category" },
+        "amount": { "type": "number", "description": "Total expense in Taka" },
+        "paymentMethod": { "type": "string", "enum": ["cash", "bkash", "nagad", "bank"], "description": "Payment channel" }
+      },
+      "required": ["id", "date", "memberId", "memberName", "title", "amount", "paymentMethod"]
+    },
+    "Deposit": {
+      "title": "Deposit",
+      "description": "Money deposited by a boarder to mess fund",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Deposit record ID" },
+        "date": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "description": "Deposit date in YYYY-MM-DD" },
+        "memberId": { "type": "string", "description": "Boarder UID or ID" },
+        "memberName": { "type": "string", "description": "Name of boarder" },
+        "amount": { "type": "number", "description": "Amount deposited" },
+        "paymentMethod": { "type": "string", "enum": ["cash", "bkash", "nagad", "bank"], "description": "Payment method" },
+        "note": { "type": "string", "maxLength": 200, "description": "Optional notes or txn ID" }
+      },
+      "required": ["id", "date", "memberId", "memberName", "amount", "paymentMethod"]
+    },
+    "FixedCost": {
+      "title": "FixedCost",
+      "description": "Shared monthly fixed utility and bill",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Fixed cost ID" },
+        "month": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}$", "description": "Month in YYYY-MM" },
+        "title": { "type": "string", "maxLength": 100, "description": "Name of bill" },
+        "amount": { "type": "number", "description": "Total amount" },
+        "category": { "type": "string", "enum": ["cook_bill", "utility", "wifi", "maid", "others"], "description": "Cost type" }
+      },
+      "required": ["id", "month", "title", "amount", "category"]
+    },
+    "MessNotice": {
+      "title": "MessNotice",
+      "description": "Mess management announcement or notice",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Notice ID" },
+        "date": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "description": "Publish date in YYYY-MM-DD" },
+        "title": { "type": "string", "maxLength": 150, "description": "Notice title" },
+        "content": { "type": "string", "maxLength": 1000, "description": "Notice body text" },
+        "author": { "type": "string", "description": "Author name" },
+        "priority": { "type": "string", "enum": ["normal", "important", "urgent"], "description": "Priority level" },
+        "servingSchedule": { "type": "string", "description": "Optional breakfast/lunch/dinner serving time announce" }
+      },
+      "required": ["id", "date", "title", "content", "author", "priority"]
+    }
+  },
+  "firestore": {
+    "/Users/{userId}": {
+      "schema": "User",
+      "description": "Registered boarders, managers, and IT admins with approval status and profile details"
+    },
+    "/DayMealEntries/{mealId}": {
+      "schema": "DayMealEntry",
+      "description": "Daily meal entries with 4-digit token codes, menu selections, and served state"
+    },
+    "/BazarExpenses/{bazarId}": {
+      "schema": "BazarExpense",
+      "description": "Mess bazar grocery and food expenses logged by manager"
+    },
+    "/Deposits/{depositId}": {
+      "schema": "Deposit",
+      "description": "Deposits made by boarders and logged by manager"
+    },
+    "/FixedCosts/{costId}": {
+      "schema": "FixedCost",
+      "description": "Monthly shared fixed costs"
+    },
+    "/MessNotices/{noticeId}": {
+      "schema": "MessNotice",
+      "description": "Mess board notices and IT admin serving updates"
+    }
+  }
+}

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en" style="background-color: #020617; color: #f8fafc;">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Remix MealMaster - Dining & Mess Management</title>
+    <meta name="description" content="সহজে ডাইনিং মিল অন/অফ, দৈনিক বাজার খরচ, ডিপোজিট, মিল রেট ও মেস হিসাব পরিচালনা।" />
+    <meta property="og:title" content="Remix MealMaster - Dining & Mess Management" />
+    <meta property="og:description" content="সহজে ডাইনিং মিল অন/অফ, দৈনিক বাজার খরচ, ডিপোজিট, মিল রেট ও মেস হিসাব পরিচালনা।" />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#020617" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MealMaster" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/pwa-512x512.png" />
+
+    <!-- Inline Critical Styles to guarantee ZERO white flash on mobile before CSS loads -->
+    <style>
+      html, body {
+        background-color: #020617 !important;
+        color: #f8fafc !important;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        -webkit-tap-highlight-color: transparent;
+      }
+      #root {
+        min-height: 100vh;
+        background-color: #020617;
+      }
+      .mm-preloader-spin {
+        width: 36px;
+        height: 36px;
+        border: 3px solid rgba(16, 185, 129, 0.2);
+        border-top-color: #10b981;
+        border-radius: 50%;
+        animation: mm-spin 0.75s linear infinite;
+      }
+      @keyframes mm-spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+
+    <!-- Pre-React Emergency Error & Cache Recovery Shield -->
+    <script>
+      window.__emergencyClearCache = function() {
+        try {
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(regs) {
+              for (var i = 0; i < regs.length; i++) {
+                regs[i].unregister();
+              }
+            });
+          }
+          if ('caches' in window) {
+            caches.keys().then(function(keys) {
+              for (var j = 0; j < keys.length; j++) {
+                caches.delete(keys[j]);
+              }
+            });
+          }
+          sessionStorage.clear();
+        } catch (e) {}
+        window.location.reload();
+      };
+
+      // Catch any fatal script errors that occur before React mounts
+      window.addEventListener('error', function(e) {
+        var root = document.getElementById('root');
+        if (root && (!root.children.length || root.innerHTML.indexOf('mm-preloader-spin') !== -1)) {
+          root.innerHTML = '<div style="display:flex;min-height:100vh;align-items:center;justify-content:center;padding:20px;text-align:center;background:#020617;color:#f8fafc;">' +
+            '<div style="max-width:380px;background:#0f172a;border:1px solid #1e293b;border-radius:24px;padding:24px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);">' +
+            '<div style="width:48px;height:48px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:16px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px;color:#f87171;font-size:24px;">⚠️</div>' +
+            '<div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px;">মোবাইলে লোডিংয়ে সাময়িক সমস্যা</div>' +
+            '<div style="font-size:12px;color:#94a3b8;line-height:1.5;margin-bottom:16px;">ব্রাউজারের পুরাতন ক্যাশ বা সংযোগ বিচ্ছিন্নতার কারণে অ্যাপ ওপেন হতে বিলম্ব হচ্ছে। নিচের বাটনে চাপ দিয়ে রিলোড দিন।</div>' +
+            '<button onclick="window.__emergencyClearCache()" style="width:100%;padding:12px;background:#059669;color:#fff;font-weight:700;border:none;border-radius:12px;font-size:13px;cursor:pointer;">ক্যাশ ক্লিয়ার করে রিলোড দিন (Reload)</button>' +
+            '</div></div>';
+        }
+      });
+    </script>
+  </head>
+  <body class="bg-slate-950 text-slate-100 min-h-screen">
+    <div id="root">
+      <!-- Instant pre-React loading skeleton: disappears automatically when React mounts -->
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background-color:#020617;color:#f8fafc;padding:24px;text-align:center;">
+        <div style="width:52px;height:52px;background:linear-gradient(135deg,#059669,#14b8a6);border-radius:18px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;box-shadow:0 10px 25px -5px rgba(16,185,129,0.35);">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2v6a3 3 0 0 1-3 3 3 3 0 0 1-3-3V2"></path>
+            <path d="M15 2v10"></path>
+            <path d="M15 15v7"></path>
+            <path d="M6 2v7a3 3 0 0 0 3 3 3 3 0 0 0 3-3V2"></path>
+            <path d="M9 12v10"></path>
+          </svg>
+        </div>
+        <div style="font-size:19px;font-weight:800;letter-spacing:-0.02em;color:#ffffff;margin-bottom:4px;">MealMaster</div>
+        <div style="font-size:12px;color:#94a3b8;margin-bottom:20px;">ডাইনিং সিস্টেম লোড হচ্ছে...</div>
+        <div class="mm-preloader-spin"></div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

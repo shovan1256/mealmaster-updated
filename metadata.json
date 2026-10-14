@@ -1,0 +1,8 @@
+{
+  "name": "Remix MealMaster - Dining \u0026 Mess Management",
+  "description": "সহজে ডাইনিং মিল অন/অফ, দৈনিক বাজার খরচ, ডিপোজিট, মিল রেট ও মেস হিসাব পরিচালনা।",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
